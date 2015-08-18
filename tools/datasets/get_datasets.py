@@ -35,7 +35,7 @@ def get_pins(uri):
 
 def submit_pin(pin, tag, data_type=1):
     file_url = 'http://img.hb.aicdn.com/' + pin['file']['key'] + '_fw320'
-    print('Submit dataset: %s (%s)'%(tag, file_url))
+    print('Submit dataset: %s (%s)'%(tag.decode("utf-8"), file_url))
     try:
         res = requests.get(file_url, timeout=30)
         data = res.content
@@ -44,7 +44,7 @@ def submit_pin(pin, tag, data_type=1):
         f.seek(0, 0)
         res = requests.post(BRAIN_ROOT + '/datasets/',
                             files={"file": f},
-                            data={'tag': tag, "data_type": data_type})
+                            data={'tag': tag.decode("utf-8"), "data_type": data_type})
         return True
     except Exception as e:
         print(e)
